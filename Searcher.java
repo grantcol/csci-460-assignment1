@@ -8,42 +8,18 @@ import java.util.Stack;
 
 public class Searcher {
 
-	public LinkedList<Node> queue;
-	public LinkedList<Node> solutionStack;
+	public LinkedList<Node> queue; //acts as a queue for bfs and stack for dfs
+	public LinkedList<Node> solutionStack; //holds solution values
 
 	public Searcher(){
 		queue = new LinkedList<Node>();
 		solutionStack = new LinkedList<Node>();
 	}
 
-	public Node getTop() {
-		return queue.getFirst();
-	}
-
-	public Node getBack() {
-		return queue.getLast();
-	}
-
-	public int size() {
-		return queue.size();
-	}
-
-	public boolean queueContains(String nodeName) {
-		for(Node n : queue) {
-			if(n.name.equals(nodeName)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public boolean stackContains(String nodeName) {
-		for(Node n : solutionStack) {
-			if(n.name.equals(nodeName)) {
-				return true;
-			}
-		}
-		return false;
+	//QUEUE FUNCTIONS
+	
+	public void queueRoot(Node node) {
+		queue.add(node);
 	}
 
 	public void queueBFS(List<Node> nodes) {
@@ -72,10 +48,6 @@ public class Searcher {
 		}
 	}
 
-	public void queueRoot(Node node) {
-		queue.add(node);
-	}
-	
 	public void queueUCS(Node node) {
 		//UCS queueing function
 	}
@@ -83,6 +55,30 @@ public class Searcher {
 	public boolean unvisited(List<Node> nodes) {
 		for(Node nn : nodes) {
 			if(!nn.visited) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	// UTILITIES
+
+	public int size() {
+		return queue.size();
+	}
+
+	public boolean queueContains(String nodeName) {
+		for(Node n : queue) {
+			if(n.name.equals(nodeName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean stackContains(String nodeName) {
+		for(Node n : solutionStack) {
+			if(n.name.equals(nodeName)) {
 				return true;
 			}
 		}
@@ -108,5 +104,13 @@ public class Searcher {
 
 	public Node popStack(Node node) {
 		return solutionStack.pop();
+	}
+
+	public Node getTop() {
+		return queue.getFirst();
+	}
+
+	public Node getBack() {
+		return queue.getLast();
 	}
 }

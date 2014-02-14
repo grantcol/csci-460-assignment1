@@ -8,8 +8,8 @@ import java.util.PriorityQueue;
 public class Node {
 
 	public String name;
-	public boolean visited;
 	public int cost;
+	public boolean visited;
 	public List<Node> successors = new ArrayList<Node>();
 
 	public Node(String name) {
