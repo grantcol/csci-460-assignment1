@@ -9,4 +9,7 @@ public class Edge {
 		this.end = end;
 		this.distance = distance;
 	}
+	public void print() {
+		System.out.println(this.start+ "--->" + this.end);
+	}
 }

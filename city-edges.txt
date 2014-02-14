@@ -1,31 +1,17 @@
 Alexandria-Matruh:159
 Alexandria-Cairo:112
 Alexandria-Nekhel:245
-Matruh-Alexandria:159
 Matruh-Siwa:181
-Nekhel-Alexandria:245
 Nekhel-Suez:72
 Nekhel-Quseir:265
-Cairo-Alexandria:112
 Cairo-Asyut:198
 Cairo-Bawiti:186
-Siwa-Matruh:181
 Siwa-Bawiti:210
-Suez-Nekhel:72
 Bawiti-Qasr Farafra:104
-Bawiti-Cairo:186
-Bawiti-Siwa:210
-Quseir-Nekhel:265
 Quseir-Sohag:163
-Asyut-Cairo:198
 Sohag-Quena:69
 Sohag-Mut:184
 Quena-Luxor:33
-Quena-Sohag:69
 Mut-Kharga:98
-Mut-Qasr Farafra:126
 Mut-Sohag:184
 Qasr Farafra-Mut:126
-Qasr Farafra-Bawiti:104
-Luxor-Quena:33
-Kharga-Mut:98

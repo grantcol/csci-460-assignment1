@@ -8,40 +8,69 @@ import java.util.List;
 
 public class GraphConstructor {
 	public String path;
-	public SearchSpace ss = new SearchSpace();
+	public SearchGraph sg = new SearchGraph();
 	public List<Node> nodes = new ArrayList<Node>();
-	public List<Edge> edges = new ArrayList<Edge>();
-	
+
 	public GraphConstructor (String filePath) {
 		this.path = filePath;
 	}
-	
-	public SearchSpace generateGraph() throws IOException {
+
+	public SearchGraph generateGraph() throws IOException {
 		List<String> lines = new ArrayList<String>();
 		BufferedReader reader = new BufferedReader(new FileReader(path));
 		String line = null;
 		while ((line = reader.readLine()) != null) {
-		    lines.add(line);
+			lines.add(line);
 		}
-		
+
 		for(String s : lines) {
 			//create the nodes here by parsing the lines and getting the right data
 			String[] p1 = s.split("-");
 			String[] p2 = p1[1].split(":");
 			Node start = new Node(p1[0]);
 			Node end = new Node(p2[0]);
-			int distance = Integer.parseInt(p2[1]);
-			Edge e = new Edge(start, end, distance);
-			edges.add(e);
-			start.addEdge(e);
-			if(!ss.contains(start.name)) {
-				ss.addNode(start);
-			} else {
-				ss.getNode(start.name).addEdge(e);
-			}
-			if(!ss.contains(end.name))
-				ss.addNode(end);
+			int cost = Integer.parseInt(p2[1]);
+			addNode(start);
+			addNode(end);
+			getNode(start).addSuccessor(getNode(end));
+			getNode(end).addSuccessor(getNode(start));
+			printNodes();
 		}
-		return ss;
+		for(Node n : nodes) {
+			sg.addNode(n);
+		}
+		return sg;
+	}
+
+	public boolean nodeExists(Node n) {
+		for(Node nn : nodes) {
+			if(nn.name.equals(n.name)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void addNode(Node n) {
+		if(!nodeExists(n)) {
+			nodes.add(n);
+		}
+	}
+
+	public Node getNode(Node n) {
+		for(Node nn : nodes) {
+			if(nn.name.equals(n.name)) {
+				return nn;
+			}
+		}
+		return null;
+	}
+
+	public void printNodes() {
+		for(Node n : nodes) {
+			System.out.println(n.name + ": ");
+			n.printSuccessors();
+			System.out.println(" ");
+		}
 	}
 }

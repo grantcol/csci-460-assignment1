@@ -1,61 +1,87 @@
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.PriorityQueue;
 
 
 public class Node {
-	
+
 	public String name;
 	public boolean visited;
-	public int distance;
-	public List<Edge> edges = new ArrayList<Edge>();
-	
-	public Node(String name, List<Edge> edges) {
-		this.name = name;
-		this.edges = edges;
-		this.visited = false;
-	}
-	
+	public int cost;
+	public List<Node> successors = new ArrayList<Node>();
+
 	public Node(String name) {
 		this.name = name;
 		this.visited = false;
 	}
-	
+
 	public List<Node> expand() {
-		List<Node> connectedNodes = new ArrayList<Node>();
-		for(Edge e : edges) {
-			connectedNodes.add(e.end);
-			e.end.print();
+		Comparator<Node> comparator = new NodeNameComparator();
+		PriorityQueue<Node> neighbors = new PriorityQueue<Node>(10, comparator);
+		List<Node> alphabeticSuccessors = new ArrayList<Node>();
+		if(successors.size() > 0) {
+			for(Node nn : successors) {
+				neighbors.offer(nn); 
+			}
+			while(!neighbors.isEmpty()) {
+				Node alpha = neighbors.poll();
+				alphabeticSuccessors.add(alpha);
+			}
+			return alphabeticSuccessors;
 		}
-		return connectedNodes;
+		return null;
 	}
-	
-	public void visited() {
-		this.visited = true;
+
+	public void setCost(int cost) {
+		this.cost = cost;
 	}
-	
-	public void setEdges(List<Edge> edges) {
-		this.edges = edges;
+
+	public boolean successorExists(Node n) {
+		for(Node nn : successors) {
+			if(nn.name.equals(n.name)) {
+				return true;
+			}
+		}
+		return false;
 	}
-	
-	public void addEdge(Edge e) {
-		System.out.println("added edge from "+e.start+" to "+e.end+" of distance "+e.distance);
-		this.edges.add(e);
+
+	public void addSuccessor(Node n) {
+		if(!successorExists(n)) {
+			successors.add(n);
+		}
 	}
-	
-	public int numEdges() {
-		return edges.size();
+
+	public int numSuccessors() {
+		return successors.size();
 	}
-	
-	public String toString() {
-		return this.name;
-	}
-	
+
 	public void print() {
 		System.out.println("NAME: "+this.name);
-		System.out.print("EDGES: ");
-		for(Edge e : edges) {
-			System.out.print("{"+e.end.name+" DISTANCE: "+e.distance+"}, ");
+		for(Node n : successors) {
+			System.out.print(n.name+ ", ");
 		}
-		System.out.println(" total: "+numEdges());
+		System.out.println(" total: "+numSuccessors());
+	}
+
+	public void printSuccessors(){
+		for(Node n : successors){
+			System.out.print(n.name+" ");
+		}
+	}
+
+	public class NodeNameComparator implements Comparator<Node> {
+		@Override
+		public int compare(Node o1, Node o2) {
+			// TODO Auto-generated method stub
+			if(o1.name.compareTo(o2.name) < 0) {
+				return 1;
+			}
+			if(o1.name.compareTo(o2.name) > 0 ) {
+				return -1;
+			}
+			return 0;
+		}
 	}
 }
