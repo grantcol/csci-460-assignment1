@@ -34,7 +34,7 @@ public class Main {
 				break;
 			}
 			
-			//sq.queueDFS(next.expand());
+			sq.queueDFS(next.expand());
 			//sq.queueBFS(next.expand());
 			//sq.queueUCS(next, next.expand());
 		}
