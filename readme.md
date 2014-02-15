@@ -17,7 +17,7 @@ and the project should compile and run.
 
 If running the search.jar 
 <pre>java -jar search.jar</pre> 
-build input "BFS", "DFS" or "UCS" inside the general search function. 
+input "BFS", "DFS" or "UCS" inside the general search function. 
 
 The result is a print of all visited nodes in the order in which they were visited.
 
