@@ -19,12 +19,17 @@ public class Main {
 	}
 
 	public static LinkedList<Node> search(SearchGraph ss, String rootId) {
+		int i = 0;
 		Searcher sq = new Searcher();
 		Node root = ss.getNode(rootId);
+		root.cost = 0;
 		sq.queueRoot(root);
 		root.visited = true;
 		while(!sq.empty()) {
-			
+			//i++;
+			/*if(i == 11) {
+				break;
+			}*/
 			Node next = sq.queue.getFirst();
 			next.visited = true;
 			sq.pushStack(next);
@@ -35,8 +40,9 @@ public class Main {
 				break;
 			}
 			
-			//sq.queueDFS(next.expand());
-			sq.queueBFS(next.expand());
+			sq.queueDFS(next.expand());
+			//sq.queueBFS(next.expand());
+			//sq.queueUCS(next, next.expand());
 		}
 		return sq.solutionStack;
 	}

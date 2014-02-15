@@ -32,8 +32,8 @@ public class GraphConstructor {
 			int cost = Integer.parseInt(p2[1]);
 			addNode(start);
 			addNode(end);
-			getNode(start).addSuccessor(getNode(end));
-			getNode(end).addSuccessor(getNode(start));
+			getNode(start).addSuccessor(getNode(end), cost);
+			getNode(end).addSuccessor(getNode(start), cost);
 			printNodes();
 		}
 		for(Node n : nodes) {

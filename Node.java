@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 
 
@@ -11,6 +12,7 @@ public class Node {
 	public int cost;
 	public boolean visited;
 	public List<Node> successors = new ArrayList<Node>();
+	public Map<String, Integer> costs = new HashMap<String, Integer>();
 
 	public Node(String name) {
 		this.name = name;
@@ -34,10 +36,6 @@ public class Node {
 		return null;
 	}
 
-	public void setCost(int cost) {
-		this.cost = cost;
-	}
-
 	public boolean successorExists(Node n) {
 		for(Node nn : successors) {
 			if(nn.name.equals(n.name)) {
@@ -47,12 +45,21 @@ public class Node {
 		return false;
 	}
 
-	public void addSuccessor(Node n) {
+	public void addSuccessor(Node n, int cost) {
 		if(!successorExists(n)) {
 			successors.add(n);
+			costs.put(n.name, cost);
 		}
 	}
-
+	
+	public int getCost(Node n) {
+		return costs.get(n.name);
+	}
+	
+	public void setCost(int c) {
+		this.cost = c;
+	}
+	
 	public int numSuccessors() {
 		return successors.size();
 	}

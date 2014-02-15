@@ -17,7 +17,7 @@ public class Searcher {
 	}
 
 	//QUEUE FUNCTIONS
-	
+
 	public void queueRoot(Node node) {
 		queue.add(node);
 	}
@@ -48,8 +48,23 @@ public class Searcher {
 		}
 	}
 
-	public void queueUCS(Node node) {
-		//UCS queueing function
+	public void queueUCS(Node parent, List<Node> nodes) {
+		Comparator<Node> comparator = new NodeCostComparator();
+		PriorityQueue<Node> costOrdered = new PriorityQueue<Node>(10, comparator);
+		if(nodes.size() > 0 && unvisited(nodes)) {
+			for(Node n : nodes) {
+				if(!n.visited) {
+					n.setCost(parent.cost+parent.costs.get(n.name));
+					System.out.println(n.name+" "+n.cost);
+					if(!queueContains(n.name) && !stackContains(n.name))
+						queue.add(n);
+				}
+			}
+			reorder();
+		}
+		else {
+			this.queue.pop();
+		}
 	}
 
 	public boolean unvisited(List<Node> nodes) {
@@ -112,5 +127,57 @@ public class Searcher {
 
 	public Node getBack() {
 		return queue.getLast();
+	}
+
+	public void addOrdered(Node n) {
+		if(!queueContains(n.name)) {
+			System.out.println("ADDED "+n.name+" To the priority queue");
+			queue.addFirst(n);
+		}
+		else {
+			System.out.println("UPDATING : "+n.name);
+			update(n);
+		}
+	}
+	
+	public void update(Node n) {
+		for(Node nn : queue) {
+			if(nn.name.equals(n.name)) {
+				nn.setCost(n.cost);
+			}
+		}
+	}
+	
+	public void reorder() {
+		System.out.println("REORDERING");
+		Comparator<Node> comparator = new NodeCostComparator();
+		PriorityQueue<Node> costOrdered = new PriorityQueue<Node>(10, comparator);
+		LinkedList<Node> orderedSearchQueue = new LinkedList<Node>();
+		for(Node n : this.queue) {
+			costOrdered.offer(n);
+		}
+		while(!costOrdered.isEmpty()){
+			Node possible = costOrdered.poll();
+			if(!stackContains(possible.name))
+				orderedSearchQueue.push(possible);
+		}
+		queue = orderedSearchQueue;
+		for(Node nn : queue) {
+			System.out.println(nn.name+" "+nn.cost);
+		}
+	}
+	
+	public class NodeCostComparator implements Comparator<Node> {
+		@Override
+		public int compare(Node o1, Node o2) {
+			// TODO Auto-generated method stub
+			if(o1.cost > o2.cost) {
+				return -1;
+			}
+			if(o1.cost < o2.cost) {
+				return 1;
+			}
+			return 0;
+		}
 	}
 }
