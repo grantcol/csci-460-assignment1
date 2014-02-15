@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 
 public class Main {
@@ -18,10 +19,14 @@ public class Main {
 	public static LinkedList<Node> search(SearchGraph ss, String rootId) {
 		
 		Searcher sq = new Searcher();
+		//Scanner user_input = new Scanner( System.in );
 		Node root = ss.getNode(rootId);
 		root.cost = 0;
 		sq.queueRoot(root);
 		root.visited = true;
+		/*String searchQuery;
+		System.out.print("BFS DFS UCS: ");
+		searchQuery = user_input.next( );*/
 		
 		while(!sq.empty()) {
 			
@@ -33,6 +38,15 @@ public class Main {
 				sq.pushStack(next);
 				break;
 			}
+			/*if(searchQuery.equals("DFS")) {
+				sq.queueDFS(next.expand());
+			}
+			else if(searchQuery.equals("BFS")) {
+				sq.queueBFS(next.expand());
+			}
+			else if(searchQuery.equals("UCS")) {
+				sq.queueUCS(next, next.expand());
+			}*/
 			
 			sq.queueDFS(next.expand());
 			//sq.queueBFS(next.expand());
