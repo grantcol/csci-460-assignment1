@@ -1,9 +1,7 @@
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
-import java.util.Stack;
 
 
 public class Searcher {
@@ -24,7 +22,8 @@ public class Searcher {
 
 	public void queueBFS(List<Node> nodes) {
 		if(nodes.size() > 0 && unvisited(nodes)) {
-			for(Node n : nodes) {
+			for(int i = nodes.size()-1; i >= 0; i--) {
+				Node n = nodes.get(i);
 				if(!n.visited) {
 					queue.addLast(n);
 				}
@@ -49,10 +48,9 @@ public class Searcher {
 	}
 
 	public void queueUCS(Node parent, List<Node> nodes) {
-		Comparator<Node> comparator = new NodeCostComparator();
-		PriorityQueue<Node> costOrdered = new PriorityQueue<Node>(10, comparator);
 		if(nodes.size() > 0 && unvisited(nodes)) {
-			for(Node n : nodes) {
+			for(int i = nodes.size()-1; i >= 0; i--) {
+				Node n = nodes.get(i);
 				if(!n.visited) {
 					n.setCost(parent.cost+parent.costs.get(n.name));
 					System.out.println(n.name+" "+n.cost);

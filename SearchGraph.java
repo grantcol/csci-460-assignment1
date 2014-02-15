@@ -3,7 +3,7 @@ import java.util.Map;
 
 
 public class SearchGraph {
-	Map<String, Node> graph; //= new HashMap<String, Node>();
+	Map<String, Node> graph; 
 	
 	public SearchGraph () {
 		graph = new HashMap<String, Node>();

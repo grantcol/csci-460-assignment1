@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,6 +9,7 @@ public class GraphConstructor {
 	public String path;
 	public SearchGraph sg = new SearchGraph();
 	public List<Node> nodes = new ArrayList<Node>();
+	private BufferedReader reader;
 
 	public GraphConstructor (String filePath) {
 		this.path = filePath;
@@ -17,7 +17,7 @@ public class GraphConstructor {
 
 	public SearchGraph generateGraph() throws IOException {
 		List<String> lines = new ArrayList<String>();
-		BufferedReader reader = new BufferedReader(new FileReader(path));
+		reader = new BufferedReader(new FileReader(path));
 		String line = null;
 		while ((line = reader.readLine()) != null) {
 			lines.add(line);
@@ -34,7 +34,7 @@ public class GraphConstructor {
 			addNode(end);
 			getNode(start).addSuccessor(getNode(end), cost);
 			getNode(end).addSuccessor(getNode(start), cost);
-			printNodes();
+			//printNodes();
 		}
 		for(Node n : nodes) {
 			sg.addNode(n);
